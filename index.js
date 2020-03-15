@@ -46,7 +46,7 @@ const indonesia = async() => {
                 } else if (content.length > 0) {
                     await tweet(content, start_tweet.id_str).then()
                 }
-                redis_client.setex('news:'+hash_code, 60*24*30, c.title)
+                redis_client.setex('news:'+hash_code, 86400*24*30, c.title)
             }
         }
     })
@@ -89,11 +89,11 @@ const world = async() => {
                 } else if (content.length > 0) {
                     await tweet(content, start_tweet.id_str).then()
                 }
-                redis_client.setex('news:'+hash_code, 60*24*30, c.title)
+                redis_client.setex('news:'+hash_code, 86400*24*30, c.title)
             }
         }
     })
-    corona.total_affected.every(async t => {
+    corona.regions_affected.every(async t => {
         if(t.country.toLowerCase().includes('total')) {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('total_ffected')

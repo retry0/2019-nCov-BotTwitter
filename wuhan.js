@@ -38,25 +38,25 @@ const covid19_update = async () => {
         return tbs
     })
 
-    const table1_affected = await page.evaluate(async () => {
-        var tbs = []
-        var tables = document.querySelectorAll('#country_data > table > tbody > tr')
-        tables.forEach(t => {
-            tbs.push({
-                country: t.querySelector('th').textContent,
-                infection: t.querySelector('td:nth-child(2) > h4').textContent,
-                active_cases: t.querySelector('td:nth-child(3) > h4').textContent,
-                deaths: t.querySelector('td:nth-child(4) > h4').textContent,
-                recovered: t.querySelector('td:nth-child(5) > h4').textContent,
-            })
-        })
-        return tbs
-    })
+    // const total_affected = await page.evaluate(async () => {
+    //     var tbs = []
+    //     var tables = document.querySelectorAll('#country_data > table > tbody > tr')
+    //     tables.forEach(t => {
+    //         tbs.push({
+    //             country: t.querySelector('th').textContent,
+    //             infection: t.querySelector('td:nth-child(2) > h4').textContent,
+    //             active_cases: t.querySelector('td:nth-child(3) > h4').textContent,
+    //             deaths: t.querySelector('td:nth-child(4) > h4').textContent,
+    //             recovered: t.querySelector('td:nth-child(5) > h4').textContent,
+    //         })
+    //     })
+    //     return tbs
+    // })
     await browser.close()
     return {
         news: news,
         regions_affected: table_affected,
-        total_affected: table1_affected
+        // total_affected: table_affected
 
     }
 };
