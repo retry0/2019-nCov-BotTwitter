@@ -29,7 +29,6 @@ const indonesia = async() => {
                 console.log(hash_code+" EXIST")
                 return false
             } else {
-                // console.log(hash_code)
                 var start_tweet = await tweet(c.title).then(start_tweet)
                 var latest_id = start_tweet.id_str
                 if(content.length > 278) {
@@ -61,6 +60,7 @@ const indonesia = async() => {
         }
     })
 }
+
 
 const malaysia = async() => {
     var corona = await nCov()
@@ -148,53 +148,8 @@ const singapore = async() => {
     })
 }
 
-const world = async() => {
-    var corona = await nCov()
-    corona.news.every(async c => {
-        var content = c.content
-        if(c.title.toLowerCase().includes('total')) {
-            var hash_code = crc32(c.title)
-            if(await redisGet('news:'+hash_code)) {
-                console.log(hash_code+" EXIST")
-                return false
-            } else {
-                // console.log(hash_code)
-                var start_tweet = await tweet(c.title).then(start_tweet)
-                var latest_id = start_tweet.id_str
-                if(content.length > 278) {
-                    var chunk = chunkText(content)
-                    for (let i = 0; i < chunk.length; i++) {
-                        const element = chunk[i];
-                        var text = element.join(' ')
-                        if(i != chunk.length - 1) {
-                            text += ` ~(${i+1}/${chunk.length})`
-                        }
-                        var child_tweet = await tweet(text, latest_id).then(child_tweet)
-                        latest_id = child_tweet.id_str
-                    }
-                } else if (content.length > 0) {
-                    await tweet(content, start_tweet.id_str).then()
-                }
-                redis_client.setex('news:'+hash_code, 60*24*30, c.title)
-            }
-        }
-    })
-    corona.total_affected.every(async t => {
-        if(t.country.toLowerCase().includes('total')) {
-            let json_str = JSON.stringify(t)
-            var checkExist = await redisGet('total_ffected')
-            if(!checkExist || checkExist !== json_str) {
-                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
-                redis_client.set('total_ffected', json_str)
-            }
-        }
-    })
-}
-
-
-cron.schedule("* * * * *", () => {
-        console.log("START")
-    world()
+cron.schedule("0 0 */23 * * *", () => {
+    console.log("START")
     indonesia()
     singapore()
     malaysia()
