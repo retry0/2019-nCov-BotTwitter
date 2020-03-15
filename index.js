@@ -72,7 +72,6 @@ const malaysia = async() => {
                 console.log(hash_code+" EXIST")
                 return false
             } else {
-                // console.log(hash_code)
                 var start_tweet = await tweet(c.title).then(start_tweet)
                 var latest_id = start_tweet.id_str
                 if(content.length > 278) {
