@@ -192,7 +192,7 @@ const world = async() => {
 }
 
 
-cron.schedule("* * * * *", () => {    // console.log('running a task every 23 hours');
+cron.schedule("0 0 */23 * * *", () => {    // console.log('running a task every 23 hours');
     console.log("START")
     world()
     indonesia()
