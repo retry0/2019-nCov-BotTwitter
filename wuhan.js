@@ -56,7 +56,7 @@ const covid19_update = async () => {
     return {
         news: news,
         regions_affected: table_affected,
-        // total_affected: table_affected
+        total_affected: table_affected
 
     }
 };

@@ -7,20 +7,20 @@ const {
 
 const crc32 = require('./utils/hash')
 const cron = require('node-cron')
-const covid19_update = require('./wuhan')
+const nCov = require('./wuhan')
 const { tweet } = require('./utils/tweet')
 
 function chunkText(text) {
     var array = text.split(' ')
-    var i,j,temparray = [],chunk = 20;
+    var i,j,tmp = [],chunk = 20;
     for (i=0,j=array.length; i<j; i+=chunk) {
-        temparray.push(array.slice(i,i+chunk));
+        tmp.push(array.slice(i,i+chunk));
     }
-    return temparray
+    return tmp
 }
 
 const indonesia = async() => {
-    var corona = await covid19_update()
+    var corona = await nCov()
     corona.news.every(async c => {
         var content = c.content
         if(c.title.toLowerCase().includes('indonesia')) {
@@ -55,7 +55,7 @@ const indonesia = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('indonesia_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`2019-nCov Update for ${t.country}\n\nInfections: ${t.infection}\nActive cases: ${t.active_cases}\nDeaths: ${t.deaths}\nRecovered: ${t.recovered}\n\nUpdated ${new Date().toLocaleString()}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
                 redis_client.set('indonesia_affected', json_str)
             }
         }
@@ -63,7 +63,7 @@ const indonesia = async() => {
 }
 
 const malaysia = async() => {
-    var corona = await covid19_update()
+    var corona = await nCov()
     corona.news.every(async c => {
         var content = c.content
         if(c.title.toLowerCase().includes('malaysia')) {
@@ -98,7 +98,7 @@ const malaysia = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('malaysia_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`2019-nCov Update for ${t.country}\n\nInfections: ${t.infection}\nActive cases: ${t.active_cases}\nDeaths: ${t.deaths}\nRecovered: ${t.recovered}\n\nUpdated ${new Date().toLocaleString()}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
                 redis_client.set('malaysia_affected', json_str)
             }
         }
@@ -106,7 +106,7 @@ const malaysia = async() => {
 }
 
 const singapore = async() => {
-    var corona = await covid19_update()
+    var corona = await nCov()
     corona.news.every(async c => {
         var content = c.content
         if(c.title.toLowerCase().includes('singapore')) {
@@ -141,7 +141,7 @@ const singapore = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('singapore_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`2019-nCov Update for ${t.country}\n\nInfections: ${t.infection}\nActive cases: ${t.active_cases}\nDeaths: ${t.deaths}\nRecovered: ${t.recovered}\n\nUpdated ${new Date().toLocaleString()}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
                 redis_client.set('singapore_affected', json_str)
             }
         }
@@ -149,7 +149,7 @@ const singapore = async() => {
 }
 
 const world = async() => {
-    var corona = await covid19_update()
+    var corona = await nCov()
     corona.news.every(async c => {
         var content = c.content
         if(c.title.toLowerCase().includes('total')) {
@@ -184,7 +184,7 @@ const world = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('total_ffected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`2019-nCov Update for ${t.country}\n\nInfections: ${t.infection}\nActive cases: ${t.active_cases}\nDeaths: ${t.deaths}\nRecovered: ${t.recovered}\n\nUpdated ${new Date().toLocaleString()}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
                 redis_client.set('total_ffected', json_str)
             }
         }
@@ -192,8 +192,7 @@ const world = async() => {
 }
 
 
-cron.schedule("0 0 */23 * * *", () => {
-    console.log('running a task every 23 hours');
+cron.schedule("* * * * *", () => {    // console.log('running a task every 23 hours');
     console.log("START")
     world()
     indonesia()
