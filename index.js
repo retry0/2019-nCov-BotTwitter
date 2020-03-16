@@ -54,7 +54,7 @@ const indonesia = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('indonesia_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\n🔴 Jumlah Kasus: ${t.active_cases}\n😢 Jumlah Terinfeksi: ${t.infection}\n💀 Jumlah Kematian: ${t.deaths}\n🎉 Jumlah Sembuh: ${t.recovered}`)
                 redis_client.set('indonesia_affected', json_str)
             }
         }
@@ -97,7 +97,7 @@ const malaysia = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('malaysia_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\n🔴 Jumlah Kasus: ${t.active_cases}\n😢 Jumlah Terinfeksi: ${t.infection}\n💀 Jumlah Kematian: ${t.deaths}\n🎉 Jumlah Sembuh: ${t.recovered}`)
                 redis_client.set('malaysia_affected', json_str)
             }
         }
@@ -140,7 +140,7 @@ const singapore = async() => {
             let json_str = JSON.stringify(t)
             var checkExist = await redisGet('singapore_affected')
             if(!checkExist || checkExist !== json_str) {
-                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\nJumlah Kasus: ${t.active_cases}\nJumlah Terinfeksi: ${t.infection}\nJumlah Kematian: ${t.deaths}\nJumlah Sembuh: ${t.recovered}`)
+                await tweet(`Update 2019-nCov ${t.country}\nTanggal ${new Date().toLocaleString()}\n\n🔴 Jumlah Kasus: ${t.active_cases}\n😢 Jumlah Terinfeksi: ${t.infection}\n💀 Jumlah Kematian: ${t.deaths}\n🎉 Jumlah Sembuh: ${t.recovered}`)
                 redis_client.set('singapore_affected', json_str)
             }
         }
