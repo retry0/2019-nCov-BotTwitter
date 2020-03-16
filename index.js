@@ -148,8 +148,7 @@ const singapore = async() => {
 }
 
 //  *=detik *=minute *=jam *=hari *= bulan *=minggu */
-cron.schedule("0 0 */23 * * *", () => {    console.log("START")
-    indonesia()
+cron.schedule("* * * * *", () => {    indonesia()
     singapore()
     malaysia()
 })
